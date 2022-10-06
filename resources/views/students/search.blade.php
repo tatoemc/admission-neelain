@@ -54,29 +54,32 @@
                     <div class="">
 
                         <div class="row mg-b-20">
-                           
+                            <div class="parsley-input col-md-2 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                <label> الرقم الجامعي: <span class="tx-danger">*</span></label>
+                                <input class="form-control form-control-sm mg-b-20"
+                                    data-parsley-class-handler="#lnWrapper" name="frmno" type="text">
+                            </div>
                             <div class="parsley-input col-md-2 mg-t-20 mg-md-t-0" id="lnWrapper">
                                 <label>الاسم الاول: <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="f_name" required="" type="text">
+                                    data-parsley-class-handler="#lnWrapper" name="N1" type="text">
                             </div>
                             <div class="parsley-input col-md-2 mg-t-20 mg-md-t-0" id="lnWrapper">
                                 <label>الاسم الثاني: <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="s_name" required="" type="text">
+                                    data-parsley-class-handler="#lnWrapper" name="N2" type="text">
                             </div>
                             <div class="parsley-input col-md-2 mg-t-20 mg-md-t-0" id="lnWrapper">
                                 <label>الاسم الثالث: <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="t_name" required="" type="text">
+                                    data-parsley-class-handler="#lnWrapper" name="N3" type="text">
                             </div>
                             <div class="parsley-input col-md-2 mg-t-20 mg-md-t-0" id="lnWrapper">
                                 <label>الاسم الرابع: <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="fo_name" required="" type="text">
+                                    data-parsley-class-handler="#lnWrapper" name="N4" type="text">
                             </div>
                         </div>
-
                     </div>
                    
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -91,10 +94,13 @@
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0">#</th>
+                                    <th class="border-bottom-0">الرقم الجامعي</th>
                                     <th class="border-bottom-0">الأسم الاول</th>
                                     <th class="border-bottom-0">الأسم الثاني</th>
                                     <th class="border-bottom-0">الأسم الاوسط</th>
                                     <th class="border-bottom-0">الأسم الاخير</th>
+                                    <th class="border-bottom-0">عام القبول</th>
+                                    <th class="border-bottom-0">الكلية</th>
                                     <th class="border-bottom-0">العمليات</th>
 
                                 </tr>
@@ -105,10 +111,13 @@
                                     
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $student->f_name }} </td>
-                                        <td>{{ $student->s_name }}</td>
-                                        <td>{{ $student->t_name }}</td>
-                                        <td>{{ $student->fo_name }}</td>
+                                        <td>{{ $student->frmno }} </td>
+                                        <td>{{ $student->N1 }} </td>
+                                        <td>{{ $student->N2 }}</td>
+                                        <td>{{ $student->N3 }}</td>
+                                        <td>{{ $student->N4 }}</td>
+                                        <td>{{ $student->ENTS }}</td>
+                                        <td>{{ $student->faculty }}</td>
                                         <td>
                                             <a class="btn btn-sm btn-info" href="{{ route('students.show',$student->id)}}"><i class="fa fa-eye"></i> تفاصيل</a>
                                             <a class="btn btn-sm btn-success" href="{{ route('students.show',$student->id)}}"><i class="fa fa-print"></i> طباعة</a>

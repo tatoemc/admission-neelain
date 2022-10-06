@@ -51,13 +51,12 @@ class StudentController extends Controller
 
     public function search(Request $request)
     {
-        $students = Student::where( 'f_name', 'LIKE', '%' . $request->f_name . '%' )
-        //->where( 'f_name', 'LIKE', '%' . $request->f_name . '%' )
-        ->Where ( 's_name', 'LIKE', '%' . $request->s_name . '%' )
-        ->Where ( 't_name', 'LIKE', '%' . $request->t_name . '%' )
-        ->Where ( 'fo_name', 'LIKE', '%' . $request->fo_name . '%' )
+        $students = Student::where( 'frmno', '=', $request->frmno)
+        ->where( 'N1', 'LIKE', '%' . $request->N1 . '%' )
+        ->Where ( 'N2', 'LIKE', '%' . $request->N2 . '%' )
+        ->Where ( 'N3', 'LIKE', '%' . $request->N3 . '%' )
+        ->Where ( 'N4', 'LIKE', '%' . $request->N4 . '%' )
         ->get ();
-        //dd($);
         return view ('students.search',compact('students'));
     }
 

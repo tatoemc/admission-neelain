@@ -67,10 +67,10 @@
                             @foreach ($students as $index => $student)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $student->f_name }}</td>
-                                    <td>{{ $student->s_name }}</td>
-                                    <td>{{ $student->t_name }}</td>
-                                    <td>{{ $student->fo_name }}</td>
+                                    <td>{{ $student->N1 }}</td>
+                                    <td>{{ $student->N2 }}</td>
+                                    <td>{{ $student->N3 }}</td>
+                                    <td>{{ $student->N4 }}</td>
                                     <td>
                                         <button class="btn btn-sm btn-primary print-btn"><i class="fa fa-print"></i> طباعة</button>
                                         <button class="btn btn-sm btn-info print-btn"><i class="fa fa-eye"></i> تفاصيل</button>
