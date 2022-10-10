@@ -25,6 +25,7 @@ Route::resource('depts','DeptController');
 
 Route::resource('students','StudentController'); 
 Route::post('/import','StudentController@import')->name('import');
+Route::resource('docs','DocController'); 
 
 Route::post('search', 'StudentController@search');
 

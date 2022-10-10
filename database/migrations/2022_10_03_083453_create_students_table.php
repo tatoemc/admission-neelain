@@ -27,7 +27,8 @@ return new class extends Migration
             $table->string('ENTS');
             $table->string('admission_type');
             $table->string('study_type');
-            $table->string('faculty');
+            $table->string('faculty'); 
+            $table->unsignedBigInteger('doc_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });
