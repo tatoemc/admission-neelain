@@ -26,6 +26,7 @@ Route::resource('depts','DeptController');
 Route::resource('students','StudentController'); 
 Route::post('/import','StudentController@import')->name('import');
 Route::resource('docs','DocController'); 
+Route::get('download/{id}', 'DocController@get_file')->name('download'); 
 
 Route::post('search', 'StudentController@search');
 

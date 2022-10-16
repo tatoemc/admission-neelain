@@ -6,9 +6,10 @@ use App\Models\Student;
 use App\Models\Doc;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Auth;
 
 
-
+ 
 class ImportStudent implements ToModel, WithStartRow
 {
     /**
@@ -23,6 +24,7 @@ class ImportStudent implements ToModel, WithStartRow
  
     public function model(array $row)
     {
+        
         $doc_id = Doc::latest()->first()->id;
 
         return new Student([
@@ -37,10 +39,10 @@ class ImportStudent implements ToModel, WithStartRow
            'admission_type'    => $row[8], 
            'study_type'    => $row[9], 
            'faculty'    => $row[10],
+           'college_id' => Auth::user()->college_id,
            'doc_id'    => $doc_id, 
         ]);
         
-       
     }
 
 

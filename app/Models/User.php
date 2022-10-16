@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Doc;
+use App\Models\College;
 
 class User extends Authenticatable
 {
@@ -41,4 +43,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'roles_name' => 'array',
     ];
+
+    public function docs()
+    {
+        return $this->hasMany(Doc::class);
+    }
+    public function college()
+    {
+        return $this->belongsTo(College::class);
+    }
+
+
+
+
 }

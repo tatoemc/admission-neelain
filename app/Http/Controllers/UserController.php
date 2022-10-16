@@ -2,7 +2,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
+use App\Models\College;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
@@ -29,8 +31,8 @@ return view('users.show_users',compact('data'))
 public function create()
 {
 $roles = Role::pluck('name','name')->all();
-
-return view('users.Add_user',compact('roles'));
+$colleges = College::all();
+return view('users.Add_user',compact('roles','colleges'));
 
 }
 /**
@@ -39,24 +41,23 @@ return view('users.Add_user',compact('roles'));
 * @param  \Illuminate\Http\Request  $request
 * @return \Illuminate\Http\Response
 */
-public function store(Request $request)
+public function store(StoreUserRequest $request)
 {
-$this->validate($request, [
-'name' => 'required',
-'email' => 'required|email|unique:users,email',
-'password' => 'required|same:confirm-password',
-'roles_name' => 'required'
-]);
+  try {
+       
+       $validated = $request->validated();
 
-$input = $request->all();
-
-
-$input['password'] = Hash::make($input['password']);
-
-$user = User::create($input);
-$user->assignRole($request->input('roles_name'));
-return redirect()->route('users.index')
-->with('success','تم اضافة المستخدم بنجاح');
+       $input = $request->except(['confirm-password' ]);
+       $input['password'] = Hash::make($input['password']);
+       $user = User::create($input);
+       $user->assignRole($request->input('roles_name'));
+       session()->flash('Add_user');
+        return redirect()->route('users.index');
+        }
+    
+       catch (\Exception $e){
+        return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
 }
 
 /**

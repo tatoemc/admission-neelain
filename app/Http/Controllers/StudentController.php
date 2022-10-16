@@ -19,21 +19,24 @@ class StudentController extends Controller
     
     public function import(Request $request)
     {
-       
+        //validate request
+            $validatedData = $request->validate([
+                'file' => 'required|mimes:xls,xlsx',
+            ],[
+    
+                'file.required' =>'يرجي اختيار الملف ',
+                'file.mimes' =>'يجب ان يكون نوع الملف اكسل'
+            ]);
+
         DB::beginTransaction();
         try {
-            /*
-               $validatedData = $request->validate([
-                'file' => 'required|csv,txt,xlx,xls,pdf|max:2048',
-        
-                ]);
-                */
               //store file in storge and DB
                 $fileName = time() .'-'.$request->file->getClientOriginalName();
-                $filePath = 'uploads/' . $fileName;
-                $path = Storage::disk('public')->put($filePath, file_get_contents($request->file));
+                //$filePath = 'uploads/' . $fileName;
+                $filePath = '/' . $fileName;
+                $path = Storage::disk('public_uploads')->put($filePath, file_get_contents($request->file));
 
-                Doc::create([
+                Doc::create([ 
                 'name' => $fileName,
                 'user_id' => Auth::user()->id,
                 ]); 
@@ -41,7 +44,7 @@ class StudentController extends Controller
                Excel::import(new ImportStudent,$request->file('file'));
                 DB::commit();
                session()->flash('Add_file'); 
-               return redirect()->back();
+               return redirect()->back()->with('success','تم أضافة الملف بنجاح');
             }
     
             catch (\Exception $e){
@@ -74,13 +77,59 @@ class StudentController extends Controller
 
     public function search(Request $request)
     {
-        $students = DB::table('students')
-        ->Where('N1', 'LIKE', '%' . $request->N1 . '%')
-        ->Where('N2', 'LIKE', '%' . $request->N2 . '%')
-        ->Where('N3', 'LIKE', '%' . $request->N3 . '%')
-        ->Where('N4', 'LIKE', '%' . $request->N4 . '%')
-        ->orwhere( 'frmno', '=', $request->frmno)
-        ->paginate(10);
+        //dd($request->all());
+     try {
+
+
+        if (Auth::user()->user_type == 'admin')
+        {
+
+            if ($request->frmno)
+            {
+                $students = Student::Where('frmno',$request->frmno)->paginate(10);
+            }
+            elseif ($request->N1)
+            {
+               
+                $students = Student::Where('N1', 'like', '%' . $request->N1 . '%')
+                ->Where('N2', 'like', '%' . $request->N2 . '%')
+                ->Where('N3', 'like', '%' . $request->N3 . '%')
+                ->Where('N4', 'like', '%' . $request->N4 . '%')
+                ->paginate(10);
+            }
+
+        }
+        else
+        {
+           if ($request->frmno)
+           {
+            $students = Student::Where('college_id',Auth::user()->college_id)
+            ->Where('frmno',$request->frmno)->paginate(10);
+           }
+           elseif ($request->N1)
+           {
+           
+            $students = Student::Where('college_id',Auth::user()->college_id)
+            ->Where('N1', 'like', '%' . $request->N1 . '%')
+            ->Where('N2', 'like', '%' . $request->N2 . '%')
+            ->Where('N3', 'like', '%' . $request->N3 . '%')
+            ->Where('N4', 'like', '%' . $request->N4 . '%')
+            ->paginate(10);
+           }
+
+        }
+
+        
+
+
+
+
+       } //end of try
+    
+      catch (\Exception $e){
+    return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+     }
+       
         return view ('students.search',compact('students'));
     }
 
@@ -95,10 +144,15 @@ class StudentController extends Controller
     }
 
   
-    public function destroy(Student $student)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->student_id;
+        $student = Student::Where('id',$id)->first();
+        $student->delete();
+        return view('students.search')->with('danger','تم حذف الطالب بنجاح');
     }
+
+    
 
 
     

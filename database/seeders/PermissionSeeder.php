@@ -18,8 +18,8 @@ class PermissionSeeder extends Seeder
         $permissions = [
 
             'استيراد ملف',
-            'تصدير ملف',
             'طباعة',
+            'print',
     
             'عرض مستخدم',
             'اضافة مستخدم',

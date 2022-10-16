@@ -92,7 +92,8 @@
                         <thead>
                             <tr>
                                 <th class="wd-10p border-bottom-0">#</th>
-                                <th class="wd-15p border-bottom-0">اسم الكلية</th>
+                                <th class="wd-15p border-bottom-0">اسم الملف</th>
+                                <th class="wd-15p border-bottom-0">الموظف</th>
                                 <th class="wd-10p border-bottom-0">عدد الطلاب</th>
                                 <th class="wd-10p border-bottom-0">تاريخ أضافة الملف</th>
                                 <th class="wd-10p border-bottom-0">العمليات</th>
@@ -104,10 +105,11 @@
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $doc->name }}</td>
+                                    <td>{{ $doc->user->name }}</td>
                                     <td>{{ number_format($doc->students->count()) }}</td>
                                     <td>{{ date( 'j-m-Y', strtotime($doc->created_at)) }}
                                     <td>
-                                        <a class="btn btn-sm btn-success"  href="{{ route('docs.edit',$doc->id)}}" title="تحميل"><i
+                                        <a class="btn btn-sm btn-success"  href="{{ url('download/'.$doc->id)}}" title="تحميل"><i
                                             class="las la-download"></i></a>
 
                                         <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"

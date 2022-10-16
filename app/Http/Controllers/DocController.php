@@ -7,13 +7,28 @@ use App\Models\Student;
 use App\Http\Requests\StoreDocRequest;
 use App\Http\Requests\UpdateDocRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class DocController extends Controller
 {
     
     public function index()
     {
-        $docs =  Doc::all();
+
+        if (Auth::user()->user_type == 'admin')
+        {
+            $docs =  Doc::all();
+        }
+        else{
+            $docs =  Doc::where('user_id', Auth::user()->id)->get();
+        }
+        
+
+
+
+
+
         return view ('docs.index',compact('docs'));
     }
 
@@ -46,7 +61,7 @@ class DocController extends Controller
     {
        
 
-        $doc = Doc::where('doc_id', $request->doc_id)->first();
+        $doc = Doc::where('id', $request->doc_id)->first();
         $doc->delete();
         $students = Student::where('doc_id', $request->doc_id)->get();
         foreach($students as $student)
@@ -55,6 +70,12 @@ class DocController extends Controller
                 } 
         return redirect('/docs');
 
+    }
+    public function get_file($id)
+    { 
+        $doc = Doc::findOrFail($id);
+        $contents= Storage::disk('public_uploads')->getDriver()->getAdapter()->applyPathPrefix($doc->name);
+        return response()->download( $contents);
     }
 
 

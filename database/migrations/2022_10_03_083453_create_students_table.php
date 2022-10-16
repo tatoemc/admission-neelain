@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
+           $table->id();
             $table->unsignedBigInteger('college_id')->unsigned()->nullable();
             $table->unsignedBigInteger('dept_id')->unsigned()->nullable();
             $table->string('frmno');

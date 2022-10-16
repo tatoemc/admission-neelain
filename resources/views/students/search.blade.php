@@ -22,6 +22,12 @@
 @endsection
 @section('content')
 <!-- row -->
+@if (session('danger'))
+    <div class="alert alert-danger">
+        {{ session('danger') }}
+    </div>
+@endif
+
 <div class="row">
 
 
@@ -48,6 +54,25 @@
                         
                     </div>
                 </div><br>
+                {!! Form::open(['url' => 'search','method'=>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data' ]) !!}
+                    {{csrf_field()}}
+                  
+                    <div class="">
+                        <div class="row mg-b-20">
+                            <div class="parsley-input col-md-8 mg-t-20 mg-md-t-0" id="lnWrapper">
+                                <label>الرقم الجامعي: <span class="tx-danger">*</span></label>
+                                <input class="form-control form-control-sm mg-b-20"
+                                    data-parsley-class-handler="#lnWrapper" name="frmno" type="text" value="{{ old('frmno') }}" required="">
+                            </div>
+                           
+                            <div class="col-xs-2 col-sm-2 col-md-2 text-center">
+                                <br>
+                                <button class="btn btn-main-primary pd-x-20" type="submit">بحث</button>
+                            </div>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                    <br>
                     {!! Form::open(['url' => 'search','method'=>'POST','autocomplete'=>'off','enctype'=>'multipart/form-data' ]) !!}
                     {{csrf_field()}}
                   
@@ -55,35 +80,30 @@
 
                         <div class="row mg-b-20">
                             <div class="parsley-input col-md-2 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                <label> الرقم الجامعي: <span class="tx-danger">*</span></label>
-                                <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="frmno" type="text">
-                            </div>
-                            <div class="parsley-input col-md-2 mg-t-20 mg-md-t-0" id="lnWrapper">
                                 <label>الاسم الاول: <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="N1" type="text">
+                                    data-parsley-class-handler="#lnWrapper" name="N1" type="text" value="{{ old('N1') }}" required="">
                             </div>
                             <div class="parsley-input col-md-2 mg-t-20 mg-md-t-0" id="lnWrapper">
                                 <label>الاسم الثاني: <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="N2" type="text">
+                                    data-parsley-class-handler="#lnWrapper" name="N2" type="text" value="{{ old('N2') }}" required="">
                             </div>
                             <div class="parsley-input col-md-2 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                <label>الاسم الثالث: <span class="tx-danger">*</span></label>
+                                <label>الاسم الثالث: </label>
                                 <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="N3" type="text">
+                                    data-parsley-class-handler="#lnWrapper" name="N3" type="text" value="{{ old('N3') }}">
                             </div>
                             <div class="parsley-input col-md-2 mg-t-20 mg-md-t-0" id="lnWrapper">
-                                <label>الاسم الرابع: <span class="tx-danger">*</span></label>
+                                <label>الاسم الرابع: </label>
                                 <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="N4" type="text">
+                                    data-parsley-class-handler="#lnWrapper" name="N4" type="text" value="{{ old('N4') }}">
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 text-center">
+                                <br>
+                                <button class="btn btn-main-primary pd-x-20" type="submit">بحث</button>
                             </div>
                         </div>
-                    </div>
-                   
-                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                        <button class="btn btn-main-primary pd-x-20" type="submit">بحث</button>
                     </div>
                     {!! Form::close() !!}
                 <br><br>
@@ -110,7 +130,8 @@
                                 @foreach ($students as $index => $student)
                                     
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
+                                       
+                                        <td>{{  $student->id }}</td>
                                         <td>{{ $student->frmno }} </td>
                                         <td>{{ $student->N1 }} </td>
                                         <td>{{ $student->N2 }}</td>
@@ -120,8 +141,10 @@
                                         <td>{{ $student->faculty }}</td>
                                         <td>
                                             <a class="btn btn-sm btn-info" href="{{ route('students.show',$student->id)}}"><i class="fa fa-eye"></i> تفاصيل</a>
-                                            <a class="btn btn-sm btn-success" href="{{ route('students.show',$student->id)}}"><i class="fa fa-print"></i> طباعة</a>
-                                            
+                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
+                                                data-student_id="{{ $student->id }}"
+                                                data-studentname="{{ $student->N1}} {{ $student->N2}} {{ $student->N3}} {{ $student->N4}}" data-toggle="modal"
+                                                href="#delete" title="حذف"><i class="las la-trash">حذف</i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -133,6 +156,31 @@
                 </div>
             </div>
         </div>
+        <!-- Delete -->
+    <div class="modal" id="delete">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">حذف طالب</h6><button aria-label="Close" class="close"
+                        data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <form action="{{ route('students.destroy', 'test') }}" method="post">
+                    {{ method_field('delete') }}
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <p>هل انت متاكد من عملية الحذف ؟</p><br>
+                        <input type="hidden" name="student_id" id="student_id" value="">
+                        <input class="form-control" name="studentname" id="studentname" type="text" readonly>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-danger">تاكيد</button>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    
     </div>
 </div>
 <!-- row closed -->
@@ -152,4 +200,16 @@
 <script src="{{URL::asset('assets/plugins/parsleyjs/parsley.min.js')}}"></script>
 <!-- Internal Form-validation js -->
 <script src="{{URL::asset('assets/js/form-validation.js')}}"></script>
+
+<script>
+    $('#delete').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var student_id = button.data('student_id')
+        var studentname = button.data('studentname')
+        var modal = $(this)
+        modal.find('.modal-body #student_id').val(student_id);
+        modal.find('.modal-body #studentname').val(studentname);
+    })
+</script>
+
 @endsection

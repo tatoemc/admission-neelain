@@ -22,6 +22,12 @@
 @endsection
 @section('content')
 <!-- row -->
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
 <div class="row">
 
 
@@ -68,7 +74,7 @@
                         <div class="row mg-b-20">
                             <div class="parsley-input col-md-6" id="fnWrapper">
                                 <label> الملف: <span class="tx-danger">*</span></label>
-                                <input type="file" name="file" class="dropify" accept=".xlsx,.xlx" data-height="70" />
+                                <input type="file" name="file" class="dropify" accept=".xlsx,.xlx" data-height="70" required=""/>
 
                             </div>
 

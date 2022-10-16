@@ -24,7 +24,15 @@ class StoreStudentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'file' => 'required|mimes:xls,xlsx|max:2048',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'file.required' =>'يرجي اختيار الملف ',
+            'file.mimes' =>'يجب ان يكون نوع الملف اكسل',
+            'file.max' =>'حجم الملف كبير',
         ];
     }
 }
