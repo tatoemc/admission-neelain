@@ -39,7 +39,9 @@ class ImportStudent implements ToModel, WithStartRow
            'admission_type'    => $row[8], 
            'study_type'    => $row[9], 
            'faculty'    => $row[10],
-           'college_id' => Auth::user()->college_id,
+           'dept_name'    => $row[11],
+           'dept_id' => $row[12],
+           'college_id' => $row[13],
            'doc_id'    => $doc_id, 
         ]);
         

@@ -121,6 +121,7 @@
                                     <th class="border-bottom-0">الأسم الاخير</th>
                                     <th class="border-bottom-0">عام القبول</th>
                                     <th class="border-bottom-0">الكلية</th>
+                                    <th class="border-bottom-0">القسم</th>
                                     <th class="border-bottom-0">العمليات</th>
 
                                 </tr>
@@ -136,15 +137,22 @@
                                         <td>{{ $student->N1 }} </td>
                                         <td>{{ $student->N2 }}</td>
                                         <td>{{ $student->N3 }}</td>
-                                        <td>{{ $student->N4 }}</td>
+                                        <td>{{ $student->N4 }}</td> 
                                         <td>{{ $student->ENTS }}</td>
-                                        <td>{{ $student->faculty }}</td>
+                                        <td>{{ $student->college->name }}</td>
+                                        <td>{{ $student->dept->name }}</td>
+                                        
+                                        
                                         <td>
+                                            @can('عرض طالب')
                                             <a class="btn btn-sm btn-info" href="{{ route('students.show',$student->id)}}"><i class="fa fa-eye"></i> تفاصيل</a>
+                                            @endcan
+                                            @can('حذف طالب')
                                             <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
                                                 data-student_id="{{ $student->id }}"
                                                 data-studentname="{{ $student->N1}} {{ $student->N2}} {{ $student->N3}} {{ $student->N4}}" data-toggle="modal"
                                                 href="#delete" title="حذف"><i class="las la-trash">حذف</i></a>
+                                           @endcan
                                         </td>
                                     </tr>
                                 @endforeach

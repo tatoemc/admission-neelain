@@ -82,9 +82,10 @@
             <div class="card-header pb-0">
                 <div class="col-sm-1 col-md-2">
                    
-                        
+                    @can('اضافة كلية')
                         <a class="modal-effect btn btn-lg btn-block btn-primary" data-effect="effect-scale"
                         data-toggle="modal" href="#add">أضافة كلية</a>
+                    @endcan
                 </div>
             </div>
             <div class="card-body">
@@ -101,7 +102,7 @@
                          @if ($colleges->count() > 0)
                             @foreach ($colleges as $index => $college)
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $index+1 }}</td>
                                     <td>{{ $college->name }}</td>
 
                                     <td>

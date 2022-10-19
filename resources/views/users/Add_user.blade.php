@@ -102,19 +102,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        @can('isAdmin')
-                        <div class="col-lg-6">
-                            <label class="form-label">نوع المستخدم</label>
-                            <select name="user_type" id="select-beast"
-                                class="form-control  nice-select  custom-select">
-                                <option value="" selected disabled> -- اختيار نوع المستخدم--</option>
-                              
-                                    <option value='user'> موظف</option>
-                                    <option value='admin'> مدير</option>
-                             
-                            </select>
-                        </div>
-                        @endcan
                     </div>
 
                     <div class="row mg-b-20">

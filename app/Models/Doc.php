@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Student;
 use App\Models\User;
 
+
 class Doc extends Model
 {
     use HasFactory,SoftDeletes;
@@ -23,6 +24,6 @@ class Doc extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    
     
 }

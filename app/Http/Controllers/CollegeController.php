@@ -9,6 +9,18 @@ use Illuminate\Http\Request;
 
 class CollegeController extends Controller
 {
+
+    function __construct()
+   { 
+
+     $this->middleware('permission:عرض كلية', ['only' => ['index']]);
+     $this->middleware('permission:اضافة كلية', ['only' => ['create','store']]);
+     $this->middleware('permission:تعديل كلية', ['only' => ['edit','update']]);
+     $this->middleware('permission:حذف كلية', ['only' => ['destroy']]);
+
+    }
+ 
+
    
     public function index()
     {

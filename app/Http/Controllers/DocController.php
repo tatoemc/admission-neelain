@@ -12,6 +12,15 @@ use Auth;
 
 class DocController extends Controller
 {
+
+    function __construct()
+    {  
+ 
+      $this->middleware('permission:عرض ملف', ['only' => ['index']]);
+      $this->middleware('permission:حذف ملف', ['only' => ['destroy']]);
+ 
+     }
+     
     
     public function index()
     {
@@ -23,13 +32,9 @@ class DocController extends Controller
         else{
             $docs =  Doc::where('user_id', Auth::user()->id)->get();
         }
-        
-
-
-
-
 
         return view ('docs.index',compact('docs'));
+
     }
 
     public function create()

@@ -81,9 +81,9 @@
         <div class="card">
             <div class="card-header pb-0">
                 <div class="col-sm-1 col-md-2">
-                   
-                        
+                    @can('استيراد ملف')
                         <a class="btn btn-lg btn-block btn-primary"  href="{{ route('students.create') }}">أضافة ملف</a>
+                    @endcan
                 </div>
             </div>
             <div class="card-body">
@@ -111,11 +111,12 @@
                                     <td>
                                         <a class="btn btn-sm btn-success"  href="{{ url('download/'.$doc->id)}}" title="تحميل"><i
                                             class="las la-download"></i></a>
-
+                                     @can('حذف ملف')
                                         <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
                                                 data-doc_id="{{ $doc->id }}"
                                                 data-docname="{{ $doc->name }}" data-toggle="modal"
                                                 href="#modaldemo8" title="حذف"><i class="las la-trash"></i></a>
+                                    @endcan
                                     </td>
                                 </tr>
                             @endforeach

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Dept;
 use App\Models\User;
+use App\Models\Student;
 
 
 
@@ -23,6 +24,10 @@ class College extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+    public function students()
+    {
+        return $this->hasMany(Student::class);
     }
 
     

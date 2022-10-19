@@ -81,10 +81,10 @@
         <div class="card">
             <div class="card-header pb-0">
                 <div class="col-sm-1 col-md-2">
-                   
-                        
+                    @can('اضافة قسم')
                         <a class="modal-effect btn btn-lg btn-block btn-primary" data-effect="effect-scale"
                         data-toggle="modal" href="#add">أضافة قسم</a>
+                    @endcan
                 </div>
             </div>
             <div class="card-body">
@@ -95,18 +95,18 @@
                                 <th class="wd-10p border-bottom-0">#</th>
                                 <th class="wd-15p border-bottom-0">اسم القسم</th>
                                 <th class="wd-10p border-bottom-0">اسم الكلية</th>
+                                
                                 <th class="wd-10p border-bottom-0">العمليات</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($depts as $index => $dept)
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $index+1 }}</td>
                                     <td>{{ $dept->name }}</td>
                                     <td>{{ $dept->college->name }}</td>
                                     <td>
-                                       
-                                        @can('حذف كلية')
+                                        @can('حذف قسم')
                                             <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
                                                 data-dept_id="{{ $dept->id }}"
                                                 data-deptname="{{ $dept->name }}" data-toggle="modal"

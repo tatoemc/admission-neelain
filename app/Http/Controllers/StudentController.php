@@ -16,6 +16,18 @@ use Auth;
 
 class StudentController extends Controller
 {
+
+    function __construct()
+    { 
+ 
+      $this->middleware('permission:حذف طالب', ['only' => ['destroy']]);
+      $this->middleware('permission:استيراد ملف', ['only' => ['create','import']]);
+      $this->middleware('permission:بحث', ['only' => ['GetSearchView']]);
+      $this->middleware('permission:عرض طالب', ['only' => ['show']]);
+      
+
+     }
+
     
     public function import(Request $request)
     {

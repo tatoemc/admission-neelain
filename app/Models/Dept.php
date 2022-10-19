@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\College;
+use App\Models\Student;
 
 class Dept extends Model
 {
@@ -17,6 +18,11 @@ class Dept extends Model
     public function college()
     {
         return $this->belongsTo(College::class);
+    }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
     }
 
 
